@@ -1,7 +1,9 @@
 package backend.bookstore.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,4 +44,21 @@ public class BookController {
         repository.deleteById(bookId);
         return "redirect:../booklist";
     }
+
+    @RequestMapping(value = "/edit/{id}")
+    public String showEditBook(@PathVariable("id") Long bookId, Model model) {
+        Book book = repository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid book ID: " + bookId));
+        model.addAttribute("book", book);
+        return "editbook"; 
+    }
+    
+
+    @PostMapping("/updateBook")
+    public String updateBook(@ModelAttribute Book book) {
+        repository.save(book);
+        return "redirect:/booklist";
+    }
+    
+
 }
