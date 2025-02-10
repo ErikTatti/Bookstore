@@ -11,16 +11,28 @@
     <div>
         <form th:object="${book}" th:action="@{/save}" method="post">
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" th:field="*{title}" />
+            <input type="text" id="title" name="title" th:field="*{title}" required />
             <br>
+
             <label for="author">Author:</label>
-            <input type="text" id="author" name="author" th:field="*{author}" />
+            <input type="text" id="author" name="author" th:field="*{author}" required />
             <br>
+
             <label for="isbn">ISBN:</label>
-            <input type="text" id="isbn" name="isbn" th:field="*{isbn}" />
+            <input type="text" id="isbn" name="isbn" th:field="*{isbn}" required />
             <br>
+
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <label for="category">Category:</label>
+            <select id="category" th:field="*{category}" class="form-control">
+                <option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}"></option>
+            </select>
+            <br>
+
+            <div style="clear: both; display: block; height: 10px;"></div>
             <input type="submit" value="Add Book" />
         </form>
     </div>
 </body>
+
 </html>
