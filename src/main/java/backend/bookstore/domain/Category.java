@@ -1,6 +1,8 @@
 package backend.bookstore.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 @Entity
@@ -9,6 +11,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     
     private Long categoryId;
+    @Size(min = 3, max = 250)
     
     private String name;
 

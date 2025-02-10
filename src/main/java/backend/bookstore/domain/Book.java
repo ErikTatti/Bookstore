@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Book {
@@ -20,6 +21,8 @@ public class Book {
     private int publicationYear;
     private String isbn;
     private double price;
+
+    @NotNull(message = "Category cannot be empty.")
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -95,17 +98,15 @@ public class Book {
         this.category = category;
     }
 
-    
-
     @Override
     public String toString() {
-        if (this.category != null) 
+        if (this.category != null)
             return "Book [title=" + title + ", author=" + author + ", publicationYear=" + publicationYear
                     + ", isbn=" + isbn + ", price=" + price + ", category=" + this.getCategory() + "]";
         else
 
-        return "Book [title=" + title + ", author=" + author + ", publicationYear=" + publicationYear
-                + ", isbn=" + isbn + ", price=" + price + "]";
+            return "Book [title=" + title + ", author=" + author + ", publicationYear=" + publicationYear
+                    + ", isbn=" + isbn + ", price=" + price + "]";
     }
 
 }
