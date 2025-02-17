@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Category {
     @Id
@@ -14,6 +16,8 @@ public class Category {
     @Size(min = 3, max = 250)
     
     private String name;
+
+    @JsonIgnoreProperties("category")   
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL) 
     private List<Book> books;

@@ -41,7 +41,6 @@ public class BookController {
 
     }
    
-
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult, Model model) {
         log.info("CONTROLLER: Save the book - check validation of book: " + book);
@@ -60,6 +59,7 @@ public class BookController {
         repository.deleteById(bookId);
         return "redirect:/booklist";
     }
+    
 
     @RequestMapping(value = "/edit/{id}")
     public String showEditBook(@PathVariable("id") Long bookId, Model model) {

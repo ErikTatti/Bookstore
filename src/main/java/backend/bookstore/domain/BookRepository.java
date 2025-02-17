@@ -1,7 +1,12 @@
 package backend.bookstore.domain;
 
-import org.springframework.data.repository.CrudRepository;
 
-public interface BookRepository extends CrudRepository<Book, Long> {
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BookRepository extends JpaRepository<Book, Long> {
+        
+    Optional<Book> findById(Long id);
 
 }
