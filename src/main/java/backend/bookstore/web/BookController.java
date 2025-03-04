@@ -1,5 +1,6 @@
 package backend.bookstore.web;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,9 @@ import org.springframework.validation.BindingResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 public class BookController {
@@ -25,6 +29,11 @@ public class BookController {
     public BookController(BookRepository repository, CategoryRepository cRepository) {
         this.repository = repository;
         this.cRepository = cRepository;
+    }
+
+    @RequestMapping(value="/login")
+    public String login() {
+        return "booklist";
     }
 
     @GetMapping(value = { "/", "/booklist" })
@@ -54,13 +63,6 @@ public class BookController {
         return "redirect:/booklist";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteBook(@PathVariable("id") Long bookId) {
-        repository.deleteById(bookId);
-        return "redirect:/booklist";
-    }
-    
-
     @RequestMapping(value = "/edit/{id}")
     public String showEditBook(@PathVariable("id") Long bookId, Model model) {
         Book book = repository.findById(bookId)
@@ -75,4 +77,12 @@ public class BookController {
         repository.save(book);
         return "redirect:/booklist";
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/delete/{id}", method=RequestMethod.GET)
+    public String deleteBook(@PathVariable("id") Long bookId, Model model) {
+        repository.deleteById(bookId);
+        return "redirect:/booklist";
+    }
+    
 }

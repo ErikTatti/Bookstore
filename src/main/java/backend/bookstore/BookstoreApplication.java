@@ -1,6 +1,5 @@
 package backend.bookstore;
 
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import backend.bookstore.domain.AppUser;
+import backend.bookstore.domain.AppUserRepository;
 import backend.bookstore.domain.Book;
 import backend.bookstore.domain.BookRepository;
 import backend.bookstore.domain.Category;
@@ -24,7 +25,8 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demoData(BookRepository repository, CategoryRepository cRepository) {
+	public CommandLineRunner demoData(BookRepository repository, CategoryRepository cRepository,
+			AppUserRepository urepository) {
 		return (args) -> {
 			log.info("Save a couple of categories");
 
@@ -43,6 +45,13 @@ public class BookstoreApplication {
 			repository.save(new Book("To Kill a Mockingbird", "Harper Lee", 1960, "1234-5680", 10.99, category2));
 			repository.save(new Book("1984", "George Orwell", 1949, "1234-5681", 11.99, category2));
 			repository.save(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, "1234-5682", 13.99, category3));
+
+			log.info("Save a couple of users");
+
+			AppUser user1 = new AppUser("user", "$2a$10$4XXGNu904amNx2Q0tPL4OOZiLP012ULGVI2a8Em4SAJGCtQG1WBJu", "USER"); //salasana: user
+			AppUser user2 = new AppUser("admin", "$2a$10$YAvqdDch33w5BecjHl6WP.LjpNaYy9jQlTcE.Krl3ib7VvzRiKUta", "ADMIN"); //salasana: admin
+			urepository.save(user1);
+			urepository.save(user2);
 
 			log.info("tulostetaan kirjat");
 			for (Book book : repository.findAll()) {

@@ -1,19 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <title>Book List</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras/springsecurity6">
 
 <body>
-    <h1>Book List</h1>
-    <table>
+    <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="name">Name</span>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+        </form>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()">
+        <h2>Login</h2>
+        <form th:action="@{/login}" method="post">
+            <label>Username: <input type="text" name="username" required /></label>
+            <label>Password: <input type="password" name="password" required /></label>
+            <input type="submit" value="Login" />
+        </form>
+    </div>
+
+    <h1 sec:authorize="isAuthenticated()">Book List</h1>
+
+    <a href="/add" sec:authorize="isAuthenticated() && hasAuthority('ADMIN')">Add Book</a>
+
+    <table sec:authorize="isAuthenticated()">
         <tr>
             <th>Title</th>
             <th>Author</th>
-            <th>ISBN  </th>
+            <th>ISBN</th>
             <th>Category</th>
+            <th sec:authorize="hasAuthority('ADMIN')">Poisto</th>
         </tr>
         <tr th:each="book : ${books}">
             <td th:text="${book.title}">Title</td>
@@ -21,13 +37,12 @@
             <td th:text="${book.isbn}">ISBN</td>
             <td th:text="${book.category != null ? book.category.name : 'No Category'}"></td>
 
-            <td>
+            <td sec:authorize="hasAuthority('ADMIN')">
                 <a th:href="@{/edit/{id}(id=${book.id})}">Edit</a> |
                 <a th:href="@{/delete/{id}(id=${book.id})}">Delete</a>
             </td>
         </tr>
     </table>
-    <a href="/add">Add Book</a>
 </body>
 
 </html>

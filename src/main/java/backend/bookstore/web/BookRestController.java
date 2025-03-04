@@ -24,6 +24,7 @@ public class BookRestController {
     private static final Logger log = LoggerFactory.getLogger(BookRestController.class);
 
     private final BookRepository repository;
+    @SuppressWarnings("unused")
     private final CategoryRepository cRepository;
 
     public BookRestController(BookRepository repository, CategoryRepository cRepository) {
