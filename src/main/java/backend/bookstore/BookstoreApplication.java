@@ -15,6 +15,7 @@ import backend.bookstore.domain.BookRepository;
 import backend.bookstore.domain.Category;
 import backend.bookstore.domain.CategoryRepository;
 
+@SuppressWarnings("unused")
 @SpringBootApplication
 public class BookstoreApplication {
 
@@ -24,7 +25,8 @@ public class BookstoreApplication {
 		SpringApplication.run(BookstoreApplication.class, args);
 	}
 
-	@Bean
+	
+	/*@Bean
 	public CommandLineRunner demoData(BookRepository repository, CategoryRepository cRepository,
 			AppUserRepository urepository) {
 		return (args) -> {
@@ -58,6 +60,6 @@ public class BookstoreApplication {
 				log.info(book.toString());
 			}
 		};
-	}
+	}*/
 
 }

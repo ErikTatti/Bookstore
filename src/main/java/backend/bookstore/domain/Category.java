@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@Table(name = "category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +16,7 @@ public class Category {
     private Long categoryId;
     @Size(min = 3, max = 250)
     
+    @Column(name = "name", nullable = false)
     private String name;
 
     @JsonIgnoreProperties("category")   

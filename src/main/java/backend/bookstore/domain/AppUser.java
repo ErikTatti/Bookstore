@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "UserTable")
+@Table(name = "application_user")
 public class AppUser {
 
     @Id
@@ -18,7 +18,7 @@ public class AppUser {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password_Hash", nullable = false)
     private String passwordHash;
 
     @Column(name = "role", nullable = false)
