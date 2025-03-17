@@ -8,13 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import backend.bookstore.entity.Book;
 import backend.bookstore.entity.Category;
 import backend.bookstore.repository.BookRepository;
 import backend.bookstore.repository.CategoryRepository;
 
-@SpringBootTest(classes = BookstoreApplication.class)
+@DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BookRepositoryTest {
 
